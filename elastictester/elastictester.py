@@ -1,7 +1,8 @@
 import pyes
+import simplejson as json
 
 # stop elasticsearch if running
-# nuke its database
+# move its database somewhere temporary
 # start it up
 
 # for each test:
@@ -13,6 +14,7 @@ import pyes
 
 # compare results with expectations
 
+# restore the original db (if moved)
 
 # needed:
   # a way to specify index variance

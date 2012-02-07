@@ -1,11 +1,8 @@
 import settings
 import eshelper
+import simplejson as json
 
-# needed:
-  # a way to specify index variance
-  # a way to specify query variance
-
-if __name__ == '__main__':
+def runTest():
     es = eshelper.elasticsearch(settings.ELASTICSEARCH_URL, settings.ELASTICSEARCH_BASE)
 
     # stop elasticsearch if running
@@ -19,12 +16,11 @@ if __name__ == '__main__':
 
     rs = eshelper.resultSet()
     expected = None
-    query_text = 'test'
 
     # set up a base query to test against each index
     # of course, we need to use the same query for each index
     # or else we won't be able to compare results meaningfully
-    query = eshelper.query(query_text)
+    query = eshelper.query(settings.TEST_QUERY)
 
     # one test per set of index parameters
     for my_index in eshelper.possibleIndices():
@@ -33,8 +29,13 @@ if __name__ == '__main__':
 
         # test and record each possible query against the index
         for my_query in eshelper.possibleQueries(query):
-            result = es.query(my_query)
-            rs.addResult(my_index, my_query, result)
+            # if we haven't tested this condition before
+            if not rs.resultExists(index=my_index, query=my_query):
+                try:
+                    result = es.query(my_query)
+                except:
+                    result = json.dumps(None)
+                rs.addResult(my_index, my_query, result)
 
         # clean up the mess we made
         es.clear_index(my_index)
@@ -44,3 +45,6 @@ if __name__ == '__main__':
 
     # restore the original db (if moved)
     es.restore_data()
+
+if __name__ == '__main__':
+    runTest()

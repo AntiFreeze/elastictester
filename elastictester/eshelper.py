@@ -41,20 +41,26 @@ class elasticsearch():
         pass
 
 class index():
-    pass
+    def __init__(self, **kwargs):
+        pass
 
 class query():
-    pass
+    def __init__(self, **kwargs):
+        pass
 
 class resultSet():
 
     def addResult(self):
         pass
 
-class queryDSL():
-    pass
+    def resultExists(self, **kwargs):
+        pass
 
-def insertPayload(es, index):
+class queryDSL():
+    def __init__(self, **kwargs):
+        pass
+
+def insertPayload(es, index, payloadDir='./payload'):
     pass
 
 def possibleIndices():

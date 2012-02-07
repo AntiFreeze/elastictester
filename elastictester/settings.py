@@ -1,3 +1,7 @@
+TEST_QUERY = {
+    'title'  : 'test',
+    'body'   : 'test'
+}
 
 # ELASTICSEARCH_BASE and ELASTICSEARCH_URL
 # must be defined in local_settings
